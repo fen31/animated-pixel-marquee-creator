@@ -1,0 +1,234 @@
+.admin-marquee{
+  padding:1%;
+}
+.am-form{
+  margin-top:5px;
+  border:2px solid #153eab;
+  padding:10px;
+}
+.admin-marquee *{
+  box-sizing: border-box;
+
+}
+.admin-marquee label{
+  color:#153eab;
+  font-size:150%;
+  display:inline-block;
+  padding:5px;
+}
+
+.admin-marquee h4{
+  font-size:150%;
+}
+
+.am-entrada{
+  display:inline-block;
+
+}
+
+.am-bloque{
+  margin-top:5%;
+  margin-bottom:5%;
+  vertical-align: top;
+  height:auto;
+
+}
+.special{
+  padding-left:5px;
+  border:1px solid #040b1e;
+}
+.am-bloque span{
+  display:inline-block;
+  width:100px;
+  margin-bottom:4px;
+  vertical-align: top;
+}
+.am-textarea{
+  display:inline-block;
+  vertical-align: top;
+  height:100px;
+  resize:none;
+}
+.am-titulo{
+  border:5px solid white;
+  padding:5px;
+}
+.am-bloque:nth-child(7){
+  margin-top:50px;
+  border-top:2px solid  #153eab ;
+}
+.marcadores{
+  margin-left:5px;
+  margin-bottom:20px;
+  font-size:130%;
+  white-space: nowrap;
+
+}
+#marcadoreshead{
+  display:inline-block;
+  color:#153eab;
+  justify-content: center;
+  text-align: center;
+  width:20%;
+white-space:nowrap;
+text-overflow: ellipsis;
+overflow: hidden;
+border-width:1px 0px 1px 1px;
+border-color: gray;
+border-style:solid;
+padding-bottom:4px;
+background-color:white;
+
+}
+#marcadoreshead *{
+  color:#153eab;
+}
+#maricono{
+  display:block;
+  background-image:url("../img/marcador2.png");
+  margin:auto;
+}
+#marcadores{
+width:59%;
+ margin-left:5px;
+ border-radius: 0px 4px 4px 4px;
+ border-width:1px 1px 1px 0px;
+ border-style: solid;
+ border-color: gray;
+ display:inline-block;
+ background-color:white;
+ vertical-align: top;
+ white-space: normal;
+
+
+
+}
+#marcadores *{
+  font-size:80%;
+  color:#153eab;
+
+}
+
+
+
+.charrow{
+  display:none;
+  margin:5px;
+  width:auto;
+  height:auto;
+  background-color:#1847c4;
+  padding:5px;
+  box-sizing: border-box;
+}
+.canvasdraw{
+  height:calc(15px * 3);
+  width:calc(7px * 3);
+  background-color:white;
+    cursor:pointer;
+}
+.canvasdraw:hover{
+      box-shadow: 0px 1px 2px 1px black;
+}
+.canvasdraw:active{
+  border:1px solid black;
+    position:relative;
+    top:-20px;
+    box-shadow: 0px 20px 2px 1px black;
+
+}
+
+.boton{
+  display:inline-block;
+  width:35px;
+  height:35px;
+  background-image:url("marcador.png");
+  background-size: 40% 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+.shortcode{
+  color:white;
+  padding:5px;
+  border:2px solid  #153eab ;
+  background-color:#1a95d1;
+  vertical-align:top;
+}
+#shortcode{
+  float:right;
+  margin-top:10px;
+  text-align:center;
+  font-size:150% !important;
+  display:inline-block;
+  width:100%;
+  max-width:200px;
+  padding:3px
+}
+#clip{
+  width:49%;
+  height:100px;
+  line-height: 25px;
+  padding-top:10px;
+  display:inline-block;
+  text-align:center;
+  vertical-align:top;
+  cursor:copy;
+  user-select: none;
+  position:relative;
+  text-shadow: 4px 4px 2px #126891;
+  color:#1a95d1;
+  font-size:300%;
+  font-weight: bolder;
+}
+#clip:active::after{
+  display:block;
+  font-size:300%;
+  content:'\2713';
+  color:rgb(0,255,0);
+}
+
+#clip:active{
+  position:relative;
+  top:4px;
+  color:#126891;
+  text-shadow: 0px 0px 0px #126891;
+}
+
+
+
+.am-submit{
+  margin-top:10px;
+  width:auto;
+  border:4px solid #1a95d1;
+  font-size: 150% !important;
+  background-color:white;
+  color:#1a95d1;
+}
+.am-submit:hover{
+  color:white;
+  border:4px solid white;
+  background-color:#1a95d1;
+  cursor:pointer;
+}
+.admin-marquee input,textarea{
+  font-size:100%;
+}
+#tilesize{
+  width:13%;
+  min-width:50px;
+  text-align: center;
+}
+.co{
+  padding:5px;
+  height:40px;
+  margin:2px 2px;
+  text-align: center;
+  color:black !important;
+  border:5px solid black;
+}
+.wpm_help{
+  display:inline-block;
+  vertical-align:middle;
+  color:gray;
+  margin-left:20px;
+}

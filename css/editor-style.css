@@ -1,0 +1,243 @@
+*{
+  box-sizing: border-box;
+  font-family: 'Nova Square', cursive;
+}
+body{
+	line-height:normal;
+
+
+}
+
+main{
+
+}
+.contain{
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position: center;
+}
+
+.rango{
+  display:inline-block;
+  font-size:150%;
+  vertical-align: top;
+}
+
+.titulos{
+  font-size:80%;
+color:white !important;
+
+}
+.search{
+  font-size: 20px;
+}
+
+
+.paginacion{
+  display:inline-block;
+  width:auto;
+  height:100%;
+  min-width:275px;
+  margin-top:5px;
+  padding-right:3px;
+  padding-bottom:3px;
+}
+.extrem{
+  background-image:url("../img/extrem.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position: center;
+}
+.step{
+  background-image:url("../img/step.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position: center;
+}
+.extrem1{
+  background-image:url("../img/extrem1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position: center;
+}
+.step1{
+  background-image:url("../img/step1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position: center;
+}
+.entrada{
+  display:block;
+  width:40px;
+  height:100%;
+  margin:auto;
+  text-align:center;
+  border:0px;
+  outline:1px 1px 0 0 ;
+  outline-style:solid;
+  outline-color:#113d80;
+  outline-offset:3px 3px 0 0;
+  vertical-align: top;
+  font-size:80%;
+  font-size-adjust: auto;
+  color:#113d80;
+}
+.tools{
+  display:block;
+  position:sticky;
+  top:32px;
+  z-index:1000;
+  width:auto;
+  height:auto;
+  background-color:#1a4cd1;
+  border-bottom:1px solid #020612;
+  margin-bottom:20px;
+  box-shadow: 0px 1px 2px 2px #040b1e ;
+  color:white ;
+}
+
+.charedit {
+display:inline-block;
+text-align: center;
+vertical-align: top;
+margin-right:2px;
+margin-left: 2px;
+}
+.charedit:nth-child(1){
+
+}
+.boton{
+  display:inline-block;
+  width:55px;
+  height:35px;
+  overflow:hidden;
+  vertical-align:top;
+  background-color:#0f2c78;
+  box-shadow: 1px 1px 3px 3px #040b1e;
+	cursor:pointer;
+}
+.boton4{
+  width:40px;
+  height:40px;
+  display:inline-block;
+  background-color:#1a95d1;
+  margin:4px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  box-shadow: 1px 1px 3px 3px #040b1e ;
+  cursor:pointer;
+
+}
+.boton:hover,.boton4:hover{
+
+  filter:brightness(200%);
+  filter:hue-rotate(220deg);
+  filter:contrast(400%);
+background-color:rgba(255, 235, 59, 0.61)
+}
+.boton:active,.boton4:active{
+  box-shadow:none;
+}
+.charrow{
+  display:inline-block;
+  background-color:#153eab;
+  border-style: ridge;
+  border-width: 4px 6px 4px 1px;
+  border-color:#020612;
+  margin: 0 10px 10px 0 ;
+}
+.bloque1{
+  display:inline-block;
+  vertical-align:top;
+  margin-left:2px;
+}
+.bloque1 *{
+  display:block;
+  margin:0px;
+  color:white;
+}
+
+
+.deshacer{
+  background-image:url("../img/deshacer.png");
+
+}
+.rehacer{
+    background-image:url("../img/rehacer.png");
+}
+.guardar{
+    background-image:url("../img/guardar.png");
+    background-size: 80% 80%;
+    background-color: #2bd6d6
+}
+.marcador{
+  background-image: url("../img/marcador.png");
+  background-size:70% 70%;
+  margin-left:1px;
+  margin-top:5px;
+  width:30px;
+  height:30px;
+  border-radius: 5px;
+}
+.marcador2{
+  background-image: url("../img/marcador2.png");
+  background-size:70% 70%;
+  margin-left:1px;
+  margin-top:5px;
+  width:30px;
+  height:30px;
+  border-radius: 5px;
+}
+.restablecer{
+  background-image: url("../img/restablecer.png");
+  margin-left:1px;
+  margin-top:10px;
+  background-size:70% 70%;
+  width:30px;
+  height:30px;
+  border-radius: 5px;
+  background-color:gray;
+}
+.chardraw{
+  position:relative;
+  display:inline-block;
+  width:calc(20px * 7);
+  height:calc(20px *15);
+  margin:5px 10px 5px 0px ;
+  vertical-align: top;
+  background-color:white;
+  margin-left: 10px;
+
+}
+.charadd{
+  display:inline-block;
+}
+
+
+
+
+.borrar{
+  background-image: url("../img/borrar.png");
+  background-size: 80% 80%;
+}
+.llenar{
+  background-image: url("../img/llenar.png");
+    background-size: 80% 80%;
+}
+.copiar{
+  background-image: url("../img/copiar.png");
+}
+.pegar{
+  background-image: url("../img/pegar.png");
+}
+
+
+
+
+
+@media (max-width:600px) {
+  .tools{
+    top:0px;
+  }
+}
