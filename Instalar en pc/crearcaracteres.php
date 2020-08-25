@@ -37,6 +37,9 @@ function crearcaracteres(){
     return $aux;
   }
 */
+  $sql = "SELECT id FROM {$nombre_tabla}";
+  $is_there = $wpdb->get_results($sql,ARRAY_A);
+  if(!count($is_there) > 0){
     if(\apmc\ajax\validateData(\apmc\install\caracteresiniciales\caracteresiniciales())){
 		    $chars = sanitize_text_field(json_encode(\apmc\install\caracteresiniciales\caracteresiniciales()));
     }else{die("File 'caracteresiniciales.php' is corrupted");}
@@ -44,6 +47,7 @@ function crearcaracteres(){
 		$nombre_tabla,array(
 			'Data'=>$chars,
 		));
+  }
 
 }
 ?>
