@@ -1,13 +1,15 @@
+const APMCSPACEBETWEENTEXT = "            ";//At the moment the only way to change the space between repetitive text.
+
 function apmcgetAncho(){
   return document.getElementById('apmcwrap').clientWidth;
 }
 
 window.addEventListener('resize',function(){
-   apmc.load( apmcdata.opciones['tilesize'], apmcdata.opciones['texto'], apmcdata.opciones['color'], apmcdata.opciones['velocidad'],apmcgetAncho());
-  apmcmarqueeStart( apmc.gl, apmc.texto, apmc.tilenorm);
+   apmcmarquee.load();
+  apmcmarqueeStart();
 });
 
-apmc = {
+apmcmarquee = {
   tilesize:0,
   tls:"",
   ancho:0,
@@ -69,19 +71,19 @@ apmc = {
     return new Float32Array(c);
   },
   gl:null,
-  load:function(tilesize,texto,color,velocidad,ancho){
-    this.tilesize = tilesize;
-    this.setColor(color);
-    this.velocidad = velocidad;
-    this.ancho = ancho;
-    this.texto="                  ".substring(0,parseInt((17/100)*(this.ancho/this.tilesize)))+texto;
+  load:function(){
+    this.tilesize = apmcdata.opciones['tilesize'];
+    this.setColor(apmcdata.opciones['color']);
+    this.velocidad = apmcdata.opciones['velocidad'];
+    this.ancho = apmcgetAncho();
+    this.texto=APMCSPACEBETWEENTEXT.substring(0,parseInt((17/100)*(this.ancho/this.tilesize)))+ apmcdata.opciones['texto'];
     this.tls= this.tilesize+".0";
     this.alto= this.tilesize*15;
     this.marqueecolumnas=Math.floor(this.ancho/this.tilesize);
     this.textoL=this.texto.length * 7;
     this.textoLS= this.textoL*this.tilesize;
-    this.marqueesL=Math.ceil(this.marqueecolumnas/this.textoL)+1;
-    this.tilenorm=this.tilesize/this.ancho;
+    this.marqueesL=Math.ceil(this.marqueecolumnas/this.textoL)+1;//fill the marquee until it covers, even if it overflows. We add one more to make sure it can be repeated during the animation.
+    this.tilenorm=this.tilesize/this.ancho;//It is necessary to normalize it to WebGl values
 
     this.gl = this.canvas.getContext("webgl",{ alpha: false,depth:false,stencil:false,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true}) || this.canvas.getContext("experimental-webgl");
 
@@ -91,7 +93,7 @@ apmc = {
   }
 }
 
- apmc.load( apmcdata.opciones['tilesize'], apmcdata.opciones['texto'], apmcdata.opciones['color'], apmcdata.opciones['velocidad'],apmcgetAncho());
+ apmcmarquee.load();
 
 
 var fsSource = `
@@ -111,13 +113,20 @@ varying vec4 v_texCoord;
 uniform float momento;
 void main() {
 
-      gl_PointSize =${ apmc.tls};
-       gl_Position = vec4(a_position-vec2(momento,0), 0, 1);
-       v_texCoord = a_texCoord * vec4(${ apmc.rgb[0]},${ apmc.rgb[1]},${ apmc.rgb[2]},1.0);
+      gl_PointSize =${ apmcmarquee.tls};
+       gl_Position = vec4(a_position - vec2(momento,0), 0, 1);
+       v_texCoord = a_texCoord * vec4(${ apmcmarquee.rgb[0]},${ apmcmarquee.rgb[1]},${ apmcmarquee.rgb[2]},1.0);
 }`;
 
 
-function apmcmarqueeStart(gl,texto,tilenorm){
+function apmcmarqueeStart(){
+  const gl = apmcmarquee.gl;
+  const texto = apmcmarquee.texto;
+  const tilenorm = apmcmarquee.tilenorm;
+  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+
 
     function createShader(gl,type,source){
       var shader = gl.createShader(type);
@@ -141,56 +150,52 @@ function apmcmarqueeStart(gl,texto,tilenorm){
       gl.deleteProgram();
     }
 
-      // Get A WebGL context
-      /** @type {HTMLCanvasElement} */
 
 
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
       // setup GLSL program
       var vertexShader = createShader(gl,gl.VERTEX_SHADER,vsSource);
       var fragmentShader = createShader(gl,gl.FRAGMENT_SHADER,fsSource);
       //PASO DOS: CREAR Y UN PROGRAMA, UNIRLE LOS SHADERS ANTERIORES Y LINKARLO AL CONTEXTO
       var program = createProgram(gl,vertexShader,fragmentShader);
-
+        gl.useProgram(program);
       // Localizamos las variables de entrada
       var positionLocation = gl.getAttribLocation(program, "a_position");
       var texcoordLocation = gl.getAttribLocation(program, "a_texCoord");
       var momentoLocation = gl.getUniformLocation(program,'momento');
 
       // Puffer para las posiciones
-      var precount;
+
       function bufferCoor(){
         var positionBuffer = gl.createBuffer();
-        var cP =  apmc.coordPosition();
-        // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
+        var cP =  apmcmarquee.coordPosition();
+
 
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        // Set a rectangle the same size as the image.
+
 
         gl.bufferData(gl.ARRAY_BUFFER,cP,gl.STATIC_DRAW);
-        precount = cP.length/2;
 
         return positionBuffer;
       }
-      // provide texture coordinates for the rectangle.
+      //El color de los vértices
       function buffercolor(){
         var texcoordBuffer = gl.createBuffer();
-        var c =  apmc.color()
+        var c =  apmcmarquee.color()
         gl.bindBuffer(gl.ARRAY_BUFFER, texcoordBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, c, gl.STATIC_DRAW);
-
-        return texcoordBuffer;
+        return {buffer:texcoordBuffer,length:c.length};
       }
 
       var positionBuffer = bufferCoor();
-      var texcoordBuffer = buffercolor();
-
+      var pretextcoordBuffer = buffercolor();
+      var texcoordBuffer = pretextcoordBuffer.buffer;
+      const precount = pretextcoordBuffer.length;
 
       gl.clear(gl.COLOR_BUFFER_BIT);
 
       // Tell it to use our program (pair of shaders)
-      gl.useProgram(program);
+
 
 
       // Turn on the position attribute
@@ -213,19 +218,31 @@ function apmcmarqueeStart(gl,texto,tilenorm){
           texcoordLocation,1,gl.FLOAT,false,0,0);
 
 
-      //gl.deleteBuffer(texCoordBuffer)
-      var momento = (texto.length * 7)*2 ;
 
-    var mom = 0;
-    var of = 0.0;
-    function draw(){
-        mom = mom%momento
-        gl.uniform1f(momentoLocation,mom*tilenorm);
-        gl.drawArrays(gl.POINTS, 0, precount);
-        mom +=  apmc.velocidad;
-        requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
+      var momento = (texto.length * 7)*2 //This is the distance, in tile units, for moving the text. We multiply by two, because it was necessary during the normalization of vertices in ampc.coordPosition ;
+
+      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+
+    gl.deleteProgram(program)
+  apmc_draw(gl,momento,momentoLocation,tilenorm,precount,apmcmarquee.velocidad);
+
 }
 
- apmcmarqueeStart(apmc.gl, apmc.texto, apmc.tilenorm);
+function apmc_draw(gl,momento,momentoLocation,tilenorm,precount,velocidad){
+
+  var mom = 0;
+//
+  eval(`function _draw(){
+    mom = mom%${momento};
+    gl.uniform1f(momentoLocation,mom*${tilenorm});
+
+    gl.drawArrays(gl.POINTS,0,${precount});
+
+    mom += ${velocidad};
+  requestAnimationFrame(_draw)
+}`);
+requestAnimationFrame(_draw);
+}
+ apmcmarqueeStart();
+
